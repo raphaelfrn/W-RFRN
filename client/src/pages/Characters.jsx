@@ -13,7 +13,6 @@ const Characters = () =>  {
       try {
         const res = await axios.get("http://localhost:8800/characters");
         setCharacters(res.data)
-        console.log(res)
       } catch (error) {
         console.log(error);
       }
@@ -30,7 +29,7 @@ const Characters = () =>  {
         <h1>W-RFRN</h1>
         <div className="characters">
         {characters.map(character=>(
-          <div className="character" key={character.id}>
+          <div key={character.character_id}  className="character" >
               <h2>{character.character_name}</h2>
               <h2>{character.character_lvl}</h2>
               <h2>{character.character_class}</h2>

@@ -29,32 +29,34 @@ app.get("/characters", (req, res)=>{
     })
 })
 
-// post method (use postman to try it)
+// // post method (use postman to try it)
 
-app.post("/characters",(req,res)=>{
-    const q= "INSERT INTO characters (`character_name`, `character_lvl`,`character_class`, `user_id`) VALUES (?)"
-    const values= ["Raphalabgtueuse", "172", "Huppermage", 1]
+// app.post("/characters",(req,res)=>{
+//     const q= "INSERT INTO characters (`character_name`, `character_lvl`,`character_class`, `user_id`) VALUES (?)"
+//     const values= ["Raphalabgtueuse", "172", "Huppermage", 1]
 
-    db.query(q,[values], (err, data)=>{
-        if(err) return res.json(err)
-        return res.json[data]
-    })
-})
+//     db.query(q,[values], (err, data)=>{
+//         if(err) return res.json(err)
+//         return res.json[data]
+//     })
+// })
 
 // custom post method with values from client (body)
-
-app.post("/characters",(req,res)=>{
-    const q= "INSERT INTO characters (`character_name`, `character_lvl`,`character_class`, `user_id`) VALUES (?)"
-    const values= [req.body.character_name,
-    req.body.character_lvl,
-    req.body.character_class,
-    req.body.user_id]
-
-    db.query(q,[values], (err, data)=>{
-        if(err) return res.json(err)
-        return res.json[data]
-    })
-})
+app.post("/characters", (req, res) => {
+    const q = "INSERT INTO characters(`character_name`, `character_lvl`, `character_class`, `user_id`) VALUES (?)";
+  
+    const values = [
+      req.body.character_name,
+      req.body.character_lvl,
+      req.body.character_class,
+      req.body.user_id,
+    ];
+  
+    db.query(q, [values], (err, data) => {
+      if (err) return res.send(err);
+      return res.json(data);
+    });
+  });
 
 // app port
 app.listen(8800, ()=>{
