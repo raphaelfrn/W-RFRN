@@ -24,8 +24,8 @@ app.get("/", (req, res)=> {
 app.get("/characters", (req, res)=>{
     const q= "SELECT * FROM characters" 
     db.query(q,(err,data)=>{
-        if(err) return res.json(err)
-        return res.json(data)
+        if(err) {return res.json(err);}
+        return res.json(data);
     })
 })
 
