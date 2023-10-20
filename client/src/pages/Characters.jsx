@@ -20,6 +20,15 @@ const Characters = () =>  {
     fetchAllCharacters();
     
   }, []);
+
+  const handleDelete = async (character_id)=> {
+    try {
+      await axios.delete(`http://localhost:8800/characters/${character_id}`);
+      window.location.reload()
+    } catch (error) {
+      
+    }
+  }
   
   /* console.log(characters); */
 
@@ -33,8 +42,15 @@ const Characters = () =>  {
               <h2>{character.character_name}</h2>
               <h2>{character.character_lvl}</h2>
               <h2>{character.character_class}</h2>
-              <button className='delete'>Delete</button>
-              <button className='update'>Update</button>
+              <button className="delete" onClick={()=> handleDelete(character.character_id)} >Delete</button>
+              <button className="update"><Link
+                to={`/update/${character.character_id}`}
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Update
+              </Link></button>
+
+              
 
           </div>
         ))}

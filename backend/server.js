@@ -29,19 +29,8 @@ app.get("/characters", (req, res)=>{
     })
 })
 
-// // post method (use postman to try it)
 
-// app.post("/characters",(req,res)=>{
-//     const q= "INSERT INTO characters (`character_name`, `character_lvl`,`character_class`, `user_id`) VALUES (?)"
-//     const values= ["Raphalabgtueuse", "172", "Huppermage", 1]
-
-//     db.query(q,[values], (err, data)=>{
-//         if(err) return res.json(err)
-//         return res.json[data]
-//     })
-// })
-
-// custom post method with values from client (body)
+// Post method with values from client (body)
 app.post("/characters", (req, res) => {
     const q = "INSERT INTO characters(`character_name`, `character_lvl`, `character_class`, `user_id`) VALUES (?)";
   
@@ -57,6 +46,37 @@ app.post("/characters", (req, res) => {
       return res.json(data);
     });
   });
+
+// DELETE
+
+app.delete("/characters/:character_id", (req, res) => {
+const character_id = req.params.character_id;
+const q = "DELETE FROM CHARACTERS WHERE character_id = ?"
+db.query(q,[character_id], (err, data)=>{
+  if (err) return res.send(err);
+  return res.json("character deleted successfully");
+})
+
+})
+
+// UPDATE 
+
+app.put("/characters/:character_id", (req, res) => {
+  const character_id = req.params.character_id;
+  const q = "UPDATE characters SET `character_name` = ?, `character_lvl`= ?, `character_class`= ? WHERE character_id = ?";
+  const values = [
+    req.body.character_name,
+    req.body.character_lvl,
+    req.body.character_class
+  ];
+
+  db.query(q,[...values,character_id], (err, data)=>{
+    if (err) return res.send(err);
+    return res.json("character updated successfully");
+  })
+  
+  })
+
 
 // app port
 app.listen(8800, ()=>{
