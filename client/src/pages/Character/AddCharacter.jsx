@@ -23,7 +23,7 @@ function AddCharacter() {
     e.preventDefault()
     try {
       await axios.post("http://localhost:8800/characters", character)
-      navigate("/")
+      navigate("/characters")
     } catch (error) {
       console.log(error);
     }

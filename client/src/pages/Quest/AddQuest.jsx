@@ -21,7 +21,7 @@ function AddQuest() {
     e.preventDefault()
     try {
       await axios.post("http://localhost:8800/quests", quest)
-      navigate("/")
+      navigate("/quests")
     } catch (error) {
       console.log(error);
     }

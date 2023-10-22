@@ -25,6 +25,22 @@ app.get("/", (req, res)=> {
 // CHARACTERS METHODS
 
 
+// READ ONE 
+
+app.get("/characters/:character_id", (req, res) => {
+  const character_id = req.params.character_id;
+  const q = "SELECT * FROM characters WHERE character_id = ?";
+  db.query(q, [character_id], (err, data) => {
+    if (err) {
+      return res.json(err);
+    }
+    if (data.length === 0) {
+      return res.status(404).json("Character not found");
+    }
+    return res.json(data[0]); 
+  });
+});
+
 // display all characters as Json in navigateur at localhost:8800/characters
 app.get("/characters", (req, res)=>{
     const q= "SELECT * FROM characters" 
@@ -87,7 +103,23 @@ app.put("/characters/:character_id", (req, res) => {
 
 // QUEST METHODS  
 
-// READ 
+// READ ONE 
+
+app.get("/quests/:quest_id", (req, res) => {
+  const quest_id = req.params.quest_id;
+  const q = "SELECT * FROM quests WHERE quest_id = ?";
+  db.query(q, [quest_id], (err, data) => {
+    if (err) {
+      return res.json(err);
+    }
+    if (data.length === 0) {
+      return res.status(404).json("Quest not found");
+    }
+    return res.json(data[0]); 
+  });
+});
+
+// READ ALL 
 
 app.get("/quests", (req, res)=>{
   const q= "SELECT * FROM quests" 
