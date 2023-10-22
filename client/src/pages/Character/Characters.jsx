@@ -34,8 +34,10 @@ const Characters = () =>  {
 
   return (
     <div>
-
-        <h1>W-RFRN</h1>
+      <button>
+          <Link to="/">index</Link>
+        </button>
+        <h1>Characters List</h1>
         <div className="characters">
         {characters.map(character=>(
           <div key={character.character_id}  className="character" >
@@ -44,7 +46,7 @@ const Characters = () =>  {
               <h2>{character.character_class}</h2>
               <button className="delete" onClick={()=> handleDelete(character.character_id)} >Delete</button>
               <button className="update"><Link
-                to={`/update/${character.character_id}`}
+                to={`/updateCharacter/${character.character_id}`}
                 style={{ color: "inherit", textDecoration: "none" }}
               >
                 Update
@@ -56,7 +58,7 @@ const Characters = () =>  {
         ))}
         </div>
         <button>
-          <Link to="/add">Add new character</Link>
+          <Link to="/addCharacter">Add new character</Link>
         </button>
       
       

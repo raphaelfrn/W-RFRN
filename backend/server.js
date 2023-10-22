@@ -20,7 +20,12 @@ app.get("/", (req, res)=> {
     res.json("hello this is the backend ")
 })
 
-// display all characters as Json in navigateur at localhost:8800/books
+
+
+// CHARACTERS METHODS
+
+
+// display all characters as Json in navigateur at localhost:8800/characters
 app.get("/characters", (req, res)=>{
     const q= "SELECT * FROM characters" 
     db.query(q,(err,data)=>{
@@ -28,6 +33,8 @@ app.get("/characters", (req, res)=>{
         return res.json(data);
     })
 })
+
+
 
 
 // Post method with values from client (body)
@@ -76,6 +83,66 @@ app.put("/characters/:character_id", (req, res) => {
   })
   
   })
+
+
+// QUEST METHODS  
+
+// READ 
+
+app.get("/quests", (req, res)=>{
+  const q= "SELECT * FROM quests" 
+  db.query(q,(err,data)=>{
+      if(err) {return res.json(err);}
+      return res.json(data);
+  })
+})
+
+// CREATE
+app.post("/quests", (req, res) => {
+  const q = "INSERT INTO quests(`quest_name`, `quest_description`, `completion_status`) VALUES (?)";
+
+  const values = [
+    req.body.quest_name,
+    req.body.quest_description,
+    req.body.completion_status,
+  ];
+
+  db.query(q, [values], (err, data) => {
+    if (err) return res.send(err);
+    return res.json(data);
+  });
+});
+
+// DELETE
+
+app.delete("/quests/:quest_id", (req, res) => {
+const quest_id = req.params.quest_id;
+const q = "DELETE FROM quests WHERE quest_id = ?"
+db.query(q,[quest_id], (err, data)=>{
+if (err) return res.send(err);
+return res.json("quest deleted successfully");
+})
+
+})
+
+// UPDATE 
+
+app.put("/quests/:quest_id", (req, res) => {
+const quest_id = req.params.quest_id;
+const q = "UPDATE quests SET `quest_name` = ?, `quest_description`= ?, `completion_status`= ? WHERE quest_id = ?";
+const values = [
+  req.body.quest_name,
+  req.body.quest_description,
+  req.body.completion_status
+];
+
+db.query(q,[...values,quest_id], (err, data)=>{
+  if (err) return res.send(err);
+  return res.json("quest updated successfully");
+})
+
+})
+
 
 
 // app port

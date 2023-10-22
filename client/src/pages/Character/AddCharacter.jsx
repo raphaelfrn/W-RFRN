@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Add() {
+function AddCharacter() {
   const [character , setCharacter] = useState({
     character_name:"",
     character_lvl:"",
@@ -41,4 +41,4 @@ function Add() {
   )
 }
 
-export default Add
+export default AddCharacter

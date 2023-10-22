@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-function Update() {
+function UpdateCharacter() {
   const [character , setCharacter] = useState({
     character_name:"",
     character_lvl:"",
@@ -26,7 +26,7 @@ function Update() {
     e.preventDefault()
     try {
       await axios.put("http://localhost:8800/characters/"+ characterId, character)
-      navigate("/")
+      navigate("/characters")
     } catch (error) {
       console.log(error);
     }
@@ -39,9 +39,9 @@ function Update() {
       <input type="number" placeholder='character_lvl' onChange={handleChange} name='character_lvl' />
       <input type="text" placeholder='character_class' onChange={handleChange} name='character_class' />
 
-      <button class="formButton" onClick={handleClick}>Update</button>
+      <button className="formButton" onClick={handleClick}>Update</button>
     </div>
   )
 }
 
-export default Update
+export default UpdateCharacter
