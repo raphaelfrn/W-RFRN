@@ -42,8 +42,8 @@ const Characters = () =>  {
         {characters.map(character=>(
           <div key={character.character_id}  className="character" >
               <h2>{character.character_name}</h2>
-              <h2>{character.character_lvl}</h2>
               <h2>{character.character_class}</h2>
+              <h2>{character.character_lvl}</h2>
               <button className="delete" onClick={()=> handleDelete(character.character_id)} >Delete</button>
               <button className="update"><Link
                 to={`/updateCharacter/${character.character_id}`}
