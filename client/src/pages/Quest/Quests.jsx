@@ -41,7 +41,7 @@ const Quests = () =>  {
           <div key={quest.quest_id}  className="quest" >
               <h2>{quest.quest_name}</h2>
               <h2>{quest.quest_description}</h2>
-              <h2>{quest.completion_status}</h2>
+              <h2>{quest.quest_type}</h2>
               <button className="delete" onClick={()=> handleDelete(quest.quest_id)} >Delete</button>
               <button className="update"><Link
                 to={`/updateQuest/${quest.quest_id}`}

@@ -7,7 +7,7 @@ function UpdateQuest() {
   const [quest , setQuest] = useState({
     quest_name:"",
     quest_description:"",
-    completion_status:""
+    quest_type:""
   });
 
   const navigate = useNavigate(); 
@@ -61,10 +61,11 @@ function UpdateQuest() {
         value={quest.quest_description}
       />
       <input
-        type="checkbox"
+        type="text"
+        placeholder="quest_type"
         onChange={handleChange}
-        name="completion_status"
-        checked={quest.completion_status}
+        name="quest_type"
+        value={quest.quest_type}
       />
       <button className="formButton" onClick={handleClick}>
         Update

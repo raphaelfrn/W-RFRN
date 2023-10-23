@@ -7,7 +7,7 @@ function AddQuest() {
   const [quest , setQuest] = useState({
     quest_name:"",
     quest_description:"",
-    completion_status:""
+    quest_type:""
   });
 
   const navigate = useNavigate(); 
@@ -32,9 +32,9 @@ function AddQuest() {
       <h1>Add new quest</h1>
       <input type="text" placeholder='quest_name' onChange={handleChange} name='quest_name'/>
       <input type="text" placeholder='quest_description' onChange={handleChange} name='quest_description' />
-      <input type="checkbox" placeholder='completion_status' onChange={handleChange} name='completion_status' />
+      <input type="text" placeholder='quest_type' onChange={handleChange} name='quest_type' />
 
-      <button class="formButton" onClick={handleClick}>Add</button>
+      <button className="formButton" onClick={handleClick}>Add</button>
     </div>
   )
 }

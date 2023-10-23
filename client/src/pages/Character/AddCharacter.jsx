@@ -36,7 +36,7 @@ function AddCharacter() {
       <input type="number" placeholder='character_lvl' onChange={handleChange} name='character_lvl' />
       <input type="text" placeholder='character_class' onChange={handleChange} name='character_class' />
 
-      <button class="formButton" onClick={handleClick}>Add</button>
+      <button className="formButton" onClick={handleClick}>Add</button>
     </div>
   )
 }

@@ -13,6 +13,12 @@ const index = () => {
             <button>
             <Link to="/quests">Quests</Link>
             </button>
+            <button>
+            <Link to="/items">Items</Link>
+            </button>
+            <button>
+            <Link to="/equipmentPages">Equipment Pages</Link>
+            </button>
 
 
 

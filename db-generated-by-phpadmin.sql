@@ -29,7 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `characteritems` (
   `character_id` int(11) NOT NULL,
-  `item_id` int(11) NOT NULL
+  `item_id` int(11) NOT NULL,
+  `acquisition_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -40,7 +41,8 @@ CREATE TABLE `characteritems` (
 
 CREATE TABLE `characterquests` (
   `character_id` int(11) NOT NULL,
-  `quest_id` int(11) NOT NULL
+  `quest_id` int(11) NOT NULL,
+  `completion_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -80,8 +82,7 @@ CREATE TABLE `items` (
   `item_id` int(11) NOT NULL,
   `item_name` varchar(255) NOT NULL,
   `item_type` varchar(255) NOT NULL,
-  `recipy` varchar(255) NOT NULL,
-  `acquisition_status` tinyint(1) NOT NULL
+  `recipy` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -94,7 +95,7 @@ CREATE TABLE `quests` (
   `quest_id` int(11) NOT NULL,
   `quest_name` varchar(255) NOT NULL,
   `quest_description` varchar(255) NOT NULL,
-  `completion_status` tinyint(1) NOT NULL
+  `quest_type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

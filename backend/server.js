@@ -131,12 +131,12 @@ app.get("/quests", (req, res)=>{
 
 // CREATE
 app.post("/quests", (req, res) => {
-  const q = "INSERT INTO quests(`quest_name`, `quest_description`, `completion_status`) VALUES (?)";
+  const q = "INSERT INTO quests(`quest_name`, `quest_description`, `quest_type`) VALUES (?)";
 
   const values = [
     req.body.quest_name,
     req.body.quest_description,
-    req.body.completion_status,
+    req.body.quest_type,
   ];
 
   db.query(q, [values], (err, data) => {
@@ -161,11 +161,11 @@ return res.json("quest deleted successfully");
 
 app.put("/quests/:quest_id", (req, res) => {
 const quest_id = req.params.quest_id;
-const q = "UPDATE quests SET `quest_name` = ?, `quest_description`= ?, `completion_status`= ? WHERE quest_id = ?";
+const q = "UPDATE quests SET `quest_name` = ?, `quest_description`= ?, `quest_type`= ? WHERE quest_id = ?";
 const values = [
   req.body.quest_name,
   req.body.quest_description,
-  req.body.completion_status
+  req.body.quest_type
 ];
 
 db.query(q,[...values,quest_id], (err, data)=>{
@@ -176,6 +176,154 @@ db.query(q,[...values,quest_id], (err, data)=>{
 })
 
 
+// ITEMS METHODS  
+
+// READ ONE 
+
+app.get("/items/:item_id", (req, res) => {
+  const item_id = req.params.item_id;
+  const q = "SELECT * FROM items WHERE item_id = ?";
+  db.query(q, [item_id], (err, data) => {
+    if (err) {
+      return res.json(err);
+    }
+    if (data.length === 0) {
+      return res.status(404).json("Item not found");
+    }
+    return res.json(data[0]); 
+  });
+});
+
+// READ ALL 
+
+app.get("/items", (req, res)=>{
+  const q= "SELECT * FROM items" 
+  db.query(q,(err,data)=>{
+      if(err) {return res.json(err);}
+      return res.json(data);
+  })
+})
+
+// CREATE
+app.post("/items", (req, res) => {
+  const q = "INSERT INTO items(`item_name`, `item_type`, `recipy`) VALUES (?)";
+
+  const values = [
+    req.body.item_name,
+    req.body.item_type,
+    req.body.recipy,
+  ];
+
+  db.query(q, [values], (err, data) => {
+    if (err) return res.send(err);
+    return res.json(data);
+  });
+});
+
+// DELETE
+
+app.delete("/items/:item_id", (req, res) => {
+const item_id = req.params.item_id;
+const q = "DELETE FROM items WHERE item_id = ?"
+db.query(q,[item_id], (err, data)=>{
+if (err) return res.send(err);
+return res.json("item deleted successfully");
+})
+
+})
+
+// UPDATE 
+
+app.put("/items/:item_id", (req, res) => {
+const item_id = req.params.item_id;
+const q = "UPDATE items SET `item_name` = ?, `item_type`= ?, `recipy`= ? WHERE item_id = ?";
+const values = [
+  req.body.item_name,
+  req.body.item_type,
+  req.body.recipy
+];
+
+db.query(q,[...values,item_id], (err, data)=>{
+  if (err) return res.send(err);
+  return res.json("item updated successfully");
+})
+
+})
+
+
+// EQUIPMENT PAGES METHODS  
+
+// READ ONE 
+
+app.get("/equipmentPages/:equipment_page_id", (req, res) => {
+  const equipment_page_id = req.params.equipment_page_id;
+  const q = "SELECT * FROM equipmentpages WHERE equipment_page_id = ?";
+  db.query(q, [equipment_page_id], (err, data) => {
+    if (err) {
+      return res.json(err);
+    }
+    if (data.length === 0) {
+      return res.status(404).json("Equipment page not found");
+    }
+    return res.json(data[0]); 
+  });
+});
+
+// READ ALL 
+
+app.get("/equipmentPages", (req, res)=>{
+  const q= "SELECT * FROM equipmentpages" 
+  db.query(q,(err,data)=>{
+      if(err) {return res.json(err);}
+      return res.json(data);
+  })
+})
+
+// CREATE
+app.post("/equipmentPages", (req, res) => {
+  const q = "INSERT INTO equipmentpages(`character_id`, `level`, `items_list`) VALUES (?)";
+
+  const values = [
+    req.body.character_id,
+    req.body.level,
+    req.body.items_list
+  ];
+
+  db.query(q, [values], (err, data) => {
+    if (err) return res.send(err);
+    return res.json(data);
+  });
+});
+
+// DELETE
+
+app.delete("/equipmentPages/:equipment_page_id", (req, res) => {
+const equipment_page_id = req.params.equipment_page_id;
+const q = "DELETE FROM equipmentPages WHERE equipment_page_id = ?"
+db.query(q,[equipment_page_id], (err, data)=>{
+if (err) return res.send(err);
+return res.json("equipment page deleted successfully");
+})
+
+})
+
+// UPDATE 
+
+app.put("/equipmentPages/:equipment_page_id", (req, res) => {
+const equipment_page_id = req.params.equipment_page_id;
+const q = "UPDATE equipmentPages SET `character_id` = ?, `level`= ?, `items_list`= ? WHERE equipment_page_id = ?";
+const values = [
+  req.body.character_id,
+  req.body.level,
+  req.body.items_list
+];
+
+db.query(q,[...values,equipment_page_id], (err, data)=>{
+  if (err) return res.send(err);
+  return res.json("Equipment page updated successfully");
+})
+
+})
 
 // app port
 app.listen(8800, ()=>{
