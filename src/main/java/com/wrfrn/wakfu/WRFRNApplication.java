@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WRfrnApplication {
+public class WRFRNApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WRfrnApplication.class, args);
+        SpringApplication.run(WRFRNApplication.class, args);
     }
 
 }
