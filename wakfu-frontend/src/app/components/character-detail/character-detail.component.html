@@ -1,9 +1,15 @@
 <h1>Character Details</h1>
-<div *ngIf="character">
-  <h2>{{ character.characterName }}</h2>
-  <p>Level: {{ character.characterLvl }}</p>
-  <p>Class: {{ character.classDTO.className}}</p>
-  <p>Icon: {{ character.classDTO.classIcon}}</p>
-  <p>FullArt: {{ character.classDTO.classFullArt}}</p>
-  <p>User: {{ character.userDTO.username }}</p>
-</div>
+@if (character; as char) {
+  <div>
+    <h2>{{ char.characterName }}</h2>
+    <p>Level: {{ char.characterLvl }}</p>
+    <p>Class: {{ char.classDTO.className }}</p>
+    <p>Icon: {{ char.classDTO.classIcon }}</p>
+    <p>FullArt: {{ char.classDTO.classFullArt }}</p>
+    <p>User: {{ char.userDTO.username }}</p>
+
+    <a [routerLink]="['/characters']" class="button">Back to Character List</a>
+  </div>
+} @else {
+  <p>Character not found</p>
+}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import { CharacterService } from '../../services/character.service';
 import {CharacterDTO} from "../../dto/CharacterDTO";
 import {CommonModule} from "@angular/common";
@@ -10,7 +10,7 @@ import {CommonModule} from "@angular/common";
   standalone: true,
   templateUrl: './character-detail.component.html',
   styleUrls: ['./character-detail.component.scss'],
-  imports: [CommonModule]
+  imports: [CommonModule, RouterLink]
 })
 export class CharacterDetailComponent implements OnInit {
   character: CharacterDTO | null = null;

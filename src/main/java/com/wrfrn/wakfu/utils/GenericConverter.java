@@ -1,9 +1,9 @@
 package com.wrfrn.wakfu.utils;
 
+import com.wrfrn.wakfu.dto.*;
 import com.wrfrn.wakfu.entities.Character;
-import com.wrfrn.wakfu.dto.CharacterDTO;
-import com.wrfrn.wakfu.dto.ClassDTO;
-import com.wrfrn.wakfu.dto.UserDTO;
+import com.wrfrn.wakfu.entities.CharacterQuest;
+import com.wrfrn.wakfu.entities.CharacterQuestId;
 import org.springframework.beans.BeanUtils;
 import java.util.List;
 
@@ -31,6 +31,25 @@ public class GenericConverter {
                     targetDTO.setUserDTO(map(sourceCharacter.getUser(), UserDTO.class));
                 }
             }
+            // Gestion des propriétés imbriquées pour CharacterQuest
+            if (target instanceof CharacterQuestDTO && source instanceof CharacterQuest) {
+                CharacterQuest sourceCharacterQuest = (CharacterQuest) source;
+                CharacterQuestDTO targetDTO = (CharacterQuestDTO) target;
+
+                // Utilisation des IDs pour les propriétés imbriquées
+                if (sourceCharacterQuest.getId() != null) {
+                    CharacterQuestId id = sourceCharacterQuest.getId();
+                    if (id.getCharacter() != null) {
+                        targetDTO.setCharacterId(id.getCharacter().getCharacterId());
+                    }
+                    if (id.getQuest() != null) {
+                        targetDTO.setQuestId(id.getQuest().getQuestId());
+                    }
+                }
+
+                targetDTO.setCompletionStatus(sourceCharacterQuest.getCompletionStatus());
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

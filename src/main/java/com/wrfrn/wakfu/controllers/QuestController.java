@@ -20,13 +20,17 @@ public class QuestController {
 
     @GetMapping
     public List<QuestDTO> getAllQuests() {
-        return GenericConverter.map(questService.findAll(), QuestDTO.class);
+        List<Quest> quests = questService.findAll();
+        return GenericConverter.map(quests, QuestDTO.class);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<QuestDTO> getQuestById(@PathVariable Integer id) {
         return questService.findById(id)
-                .map(quest -> ResponseEntity.ok(GenericConverter.map(quest, QuestDTO.class)))
+                .map(quest -> {
+                    QuestDTO dto = GenericConverter.map(quest, QuestDTO.class);
+                    return ResponseEntity.ok(dto);
+                })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -34,8 +38,8 @@ public class QuestController {
     public ResponseEntity<QuestDTO> createQuest(@RequestBody QuestDTO questDTO) {
         Quest quest = GenericConverter.map(questDTO, Quest.class);
         Quest savedQuest = questService.save(quest);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(GenericConverter.map(savedQuest, QuestDTO.class));
+        QuestDTO savedDTO = GenericConverter.map(savedQuest, QuestDTO.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedDTO);
     }
 
     @PutMapping("/{id}")
@@ -46,7 +50,8 @@ public class QuestController {
         Quest quest = GenericConverter.map(questDTO, Quest.class);
         quest.setQuestId(id);
         Quest updatedQuest = questService.save(quest);
-        return ResponseEntity.ok(GenericConverter.map(updatedQuest, QuestDTO.class));
+        QuestDTO updatedDTO = GenericConverter.map(updatedQuest, QuestDTO.class);
+        return ResponseEntity.ok(updatedDTO);
     }
 
     @DeleteMapping("/{id}")
