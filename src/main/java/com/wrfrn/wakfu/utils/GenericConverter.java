@@ -20,9 +20,7 @@ public class GenericConverter {
 
             // Convertir les propriétés imbriquées si nécessaire
             // Exemple pour CharacterDTO
-            if (target instanceof CharacterDTO && source instanceof Character) {
-                Character sourceCharacter = (Character) source;
-                CharacterDTO targetDTO = (CharacterDTO) target;
+            if (target instanceof CharacterDTO targetDTO && source instanceof Character sourceCharacter) {
 
                 if (sourceCharacter.getClasse() != null) {
                     targetDTO.setClassDTO(map(sourceCharacter.getClasse(), ClassDTO.class));
@@ -32,9 +30,7 @@ public class GenericConverter {
                 }
             }
             // Gestion des propriétés imbriquées pour CharacterQuest
-            if (target instanceof CharacterQuestDTO && source instanceof CharacterQuest) {
-                CharacterQuest sourceCharacterQuest = (CharacterQuest) source;
-                CharacterQuestDTO targetDTO = (CharacterQuestDTO) target;
+            if (target instanceof CharacterQuestDTO targetDTO && source instanceof CharacterQuest sourceCharacterQuest) {
 
                 // Utilisation des IDs pour les propriétés imbriquées
                 if (sourceCharacterQuest.getId() != null) {
