@@ -3,7 +3,6 @@ package com.wrfrn.wakfu.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 import java.util.Set;
 
 @Entity
@@ -24,7 +23,7 @@ public class Character {
     private String characterName;
 
     @Column(name = "character_lvl", nullable = false)
-    private Integer characterLevel;
+    private Integer characterLvl;
 
     @ManyToOne
     @JoinColumn(name = "class_id", nullable = false)
@@ -39,6 +38,4 @@ public class Character {
 
     @OneToMany(mappedBy = "character")
     private Set<CharacterQuest> characterQuests;
-
 }
-

@@ -1,15 +1,15 @@
 package com.wrfrn.wakfu.controllers;
 
+import com.wrfrn.wakfu.dto.CharacterDTO;
 import com.wrfrn.wakfu.entities.Character;
 import com.wrfrn.wakfu.services.CharacterService;
+import com.wrfrn.wakfu.utils.GenericConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/characters")
 public class CharacterController {
@@ -18,30 +18,40 @@ public class CharacterController {
     private CharacterService characterService;
 
     @GetMapping
-    public List<Character> getAllCharacters() {
-        return characterService.findAll();
+    public List<CharacterDTO> getAllCharacters() {
+        List<Character> characters = characterService.findAll();
+        return GenericConverter.map(characters, CharacterDTO.class);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Character> getCharacterById(@PathVariable Integer id) {
-        Optional<Character> character = characterService.findById(id);
-        return character.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<CharacterDTO> getCharacterById(@PathVariable Integer id) {
+        return characterService.findById(id)
+                .map(character -> {
+                    CharacterDTO dto = GenericConverter.map(character, CharacterDTO.class);
+                    return ResponseEntity.ok(dto);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Character> createCharacter(@RequestBody Character character) {
+    public ResponseEntity<CharacterDTO> createCharacter(@RequestBody CharacterDTO characterDTO) {
+        // Vérifiez si les données sont valides
+        Character character = GenericConverter.map(characterDTO, Character.class);
         Character savedCharacter = characterService.save(character);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCharacter);
+        CharacterDTO savedDTO = GenericConverter.map(savedCharacter, CharacterDTO.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Character> updateCharacter(@PathVariable Integer id, @RequestBody Character character) {
+    public ResponseEntity<CharacterDTO> updateCharacter(@PathVariable Integer id, @RequestBody CharacterDTO characterDTO) {
         if (characterService.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        Character character = GenericConverter.map(characterDTO, Character.class);
         character.setCharacterId(id);
         Character updatedCharacter = characterService.save(character);
-        return ResponseEntity.ok(updatedCharacter);
+        CharacterDTO updatedDTO = GenericConverter.map(updatedCharacter, CharacterDTO.class);
+        return ResponseEntity.ok(updatedDTO);
     }
 
     @DeleteMapping("/{id}")

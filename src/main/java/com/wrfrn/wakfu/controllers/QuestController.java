@@ -1,14 +1,15 @@
 package com.wrfrn.wakfu.controllers;
 
+import com.wrfrn.wakfu.dto.QuestDTO;
 import com.wrfrn.wakfu.entities.Quest;
 import com.wrfrn.wakfu.services.QuestService;
+import com.wrfrn.wakfu.utils.GenericConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/quests")
@@ -18,30 +19,34 @@ public class QuestController {
     private QuestService questService;
 
     @GetMapping
-    public List<Quest> getAllQuests() {
-        return questService.findAll();
+    public List<QuestDTO> getAllQuests() {
+        return GenericConverter.map(questService.findAll(), QuestDTO.class);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Quest> getQuestById(@PathVariable Integer id) {
-        Optional<Quest> quest = questService.findById(id);
-        return quest.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<QuestDTO> getQuestById(@PathVariable Integer id) {
+        return questService.findById(id)
+                .map(quest -> ResponseEntity.ok(GenericConverter.map(quest, QuestDTO.class)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Quest> createQuest(@RequestBody Quest quest) {
+    public ResponseEntity<QuestDTO> createQuest(@RequestBody QuestDTO questDTO) {
+        Quest quest = GenericConverter.map(questDTO, Quest.class);
         Quest savedQuest = questService.save(quest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedQuest);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(GenericConverter.map(savedQuest, QuestDTO.class));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Quest> updateQuest(@PathVariable Integer id, @RequestBody Quest quest) {
+    public ResponseEntity<QuestDTO> updateQuest(@PathVariable Integer id, @RequestBody QuestDTO questDTO) {
         if (questService.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        Quest quest = GenericConverter.map(questDTO, Quest.class);
         quest.setQuestId(id);
         Quest updatedQuest = questService.save(quest);
-        return ResponseEntity.ok(updatedQuest);
+        return ResponseEntity.ok(GenericConverter.map(updatedQuest, QuestDTO.class));
     }
 
     @DeleteMapping("/{id}")

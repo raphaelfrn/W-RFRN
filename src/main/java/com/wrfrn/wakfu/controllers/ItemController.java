@@ -1,14 +1,15 @@
 package com.wrfrn.wakfu.controllers;
 
+import com.wrfrn.wakfu.dto.ItemDTO;
 import com.wrfrn.wakfu.entities.Item;
 import com.wrfrn.wakfu.services.ItemService;
+import com.wrfrn.wakfu.utils.GenericConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/items")
@@ -18,30 +19,34 @@ public class ItemController {
     private ItemService itemService;
 
     @GetMapping
-    public List<Item> getAllItems() {
-        return itemService.findAll();
+    public List<ItemDTO> getAllItems() {
+        return GenericConverter.map(itemService.findAll(), ItemDTO.class);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Item> getItemById(@PathVariable Integer id) {
-        Optional<Item> item = itemService.findById(id);
-        return item.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ItemDTO> getItemById(@PathVariable Integer id) {
+        return itemService.findById(id)
+                .map(item -> ResponseEntity.ok(GenericConverter.map(item, ItemDTO.class)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Item> createItem(@RequestBody Item item) {
+    public ResponseEntity<ItemDTO> createItem(@RequestBody ItemDTO itemDTO) {
+        Item item = GenericConverter.map(itemDTO, Item.class);
         Item savedItem = itemService.save(item);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedItem);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(GenericConverter.map(savedItem, ItemDTO.class));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Item> updateItem(@PathVariable Integer id, @RequestBody Item item) {
+    public ResponseEntity<ItemDTO> updateItem(@PathVariable Integer id, @RequestBody ItemDTO itemDTO) {
         if (itemService.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        Item item = GenericConverter.map(itemDTO, Item.class);
         item.setItemId(id);
         Item updatedItem = itemService.save(item);
-        return ResponseEntity.ok(updatedItem);
+        return ResponseEntity.ok(GenericConverter.map(updatedItem, ItemDTO.class));
     }
 
     @DeleteMapping("/{id}")

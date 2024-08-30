@@ -20,4 +20,14 @@ public class CharacterQuest {
     @Column(name = "completion_status", nullable = false)
     private Boolean completionStatus;
 
+    @ManyToOne
+    @MapsId("character")
+    @JoinColumn(name = "character_id", insertable = false, updatable = false)
+    private Character character;
+
+    @ManyToOne
+    @MapsId("quest")
+    @JoinColumn(name = "quest_id", insertable = false, updatable = false)
+    private Quest quest;
+
 }

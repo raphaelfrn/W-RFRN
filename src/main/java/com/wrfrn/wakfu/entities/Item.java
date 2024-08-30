@@ -31,5 +31,4 @@ public class Item {
     @OneToMany(mappedBy = "item")
     private Set<CharacterItem> characterItems;
 
-    // Getters and Setters
 }

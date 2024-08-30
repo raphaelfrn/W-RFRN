@@ -28,7 +28,7 @@ public class Class {
     @Column(name = "class_full_art")
     private String classFullArt;
 
-    @OneToMany(mappedBy = "clazz")
+    @OneToMany(mappedBy = "classe")
     private Set<Character> characters;
 
 }
