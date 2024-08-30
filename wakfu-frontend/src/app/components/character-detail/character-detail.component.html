@@ -1,0 +1,9 @@
+<h1>Character Details</h1>
+<div *ngIf="character">
+  <h2>{{ character.characterName }}</h2>
+  <p>Level: {{ character.characterLvl }}</p>
+  <p>Class: {{ character.classDTO.className}}</p>
+  <p>Icon: {{ character.classDTO.classIcon}}</p>
+  <p>FullArt: {{ character.classDTO.classFullArt}}</p>
+  <p>User: {{ character.userDTO.username }}</p>
+</div>

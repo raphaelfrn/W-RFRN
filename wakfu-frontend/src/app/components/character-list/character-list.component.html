@@ -1,0 +1,10 @@
+<h1>Character List</h1>
+<ul>
+  <li *ngFor="let character of (characters$ | async)">
+    <div>
+      <a [routerLink]="['/character', character.characterId]">{{ character.characterName }}</a>
+      (Level: {{ character.characterLvl }})
+      <p>Class: {{ character.classDTO.className}}</p>
+    </div>
+  </li>
+</ul>
