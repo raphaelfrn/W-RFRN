@@ -27,6 +27,10 @@ export class CharacterService {
     return this.http.put<CharacterDTO>(`${this.baseUrl}/${id}`, character);
   }
 
+  updateCharacterLevel(characterId: number, newLevel: number): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/${characterId}`, { characterLvl: newLevel });
+  }
+
   deleteCharacter(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }

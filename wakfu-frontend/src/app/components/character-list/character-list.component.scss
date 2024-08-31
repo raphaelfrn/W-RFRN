@@ -1,0 +1,150 @@
+.character-selection-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  color: #FDFAD6;
+  font-family: Arial, sans-serif;
+}
+
+.character-list-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.character-count {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.character-list-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.character-list {
+  list-style: none;
+}
+
+.character-list li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.character-list li:hover,
+.character-list li.selected {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.character-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.character-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.character-name {
+  font-weight: bold;
+}
+
+.character-class,
+.character-server {
+  font-size: 12px;
+  color: #8FAFD5;
+}
+
+.character-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.character-full-art {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.character-name-level {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.level-update-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.level-update-form label {
+  margin-bottom: 5px;
+}
+
+.level-update-form input {
+  width: 60px;
+  padding: 5px;
+  margin-bottom: 10px;
+  background-color: #2C3E50;
+  color: #FDFAD6;
+  border: 1px solid #4A5568;
+  border-radius: 3px;
+}
+
+.level-update-form button {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.level-update-form button:hover {
+  background-color: #45a049;
+}
+
+/* Custom scrollbar styles */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(253, 250, 214, 0.3) transparent;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(253, 250, 214, 0.3);
+  border-radius: 20px;
+  border: transparent;
+}

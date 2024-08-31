@@ -10,8 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/api/characters")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CharacterController {
 
     @Autowired
@@ -52,6 +54,18 @@ public class CharacterController {
         Character updatedCharacter = characterService.save(character);
         CharacterDTO updatedDTO = GenericConverter.map(updatedCharacter, CharacterDTO.class);
         return ResponseEntity.ok(updatedDTO);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<CharacterDTO> updateCharacterLevel(@PathVariable Integer id, @RequestBody CharacterDTO characterDTO) {
+        return characterService.findById(id)
+                .map(existingCharacter -> {
+                    existingCharacter.setCharacterLvl(characterDTO.getCharacterLvl());
+                    Character updatedCharacter = characterService.save(existingCharacter);
+                    CharacterDTO updatedDTO = GenericConverter.map(updatedCharacter, CharacterDTO.class);
+                    return ResponseEntity.ok(updatedDTO);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

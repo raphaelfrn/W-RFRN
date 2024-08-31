@@ -1,14 +1,34 @@
-<h1>Character List</h1>
-<ul>
-  @for (character of (characters$ | async); track character.characterId) {
-    <li>
-      <div>
-        <a [routerLink]="['/character', character.characterId]">{{ character.characterName }}</a>
-        (Level: {{ character.characterLvl }})
-        <p>Class: {{ character.classDTO.className }}</p>
-      </div>
-    </li>
-  } @empty {
-    <li>No characters available</li>
-  }
-</ul>
+<div class="character-selection-container">
+  <div class="character-list-container">
+    <h1>Liste des personnages</h1>
+    <div class="character-count">{{ (characters$ | async)?.length || 0 }}/13 Personnages</div>
+
+    <div class="character-list-wrapper">
+      <ul class="character-list">
+        @for (character of (characters$ | async); track character.characterId) {
+          <li (click)="selectCharacter(character)" [class.selected]="character === selectedCharacter">
+            <img [src]="character.classDTO.classIcon" alt="{{ character.classDTO.className }} Icon" class="character-icon">
+            <div class="character-info">
+              <span class="character-name">{{ character.characterName }}</span>
+              <span class="character-class">{{ character.classDTO.className }} Niv.{{ character.characterLvl }}</span>
+            </div>
+          </li>
+        } @empty {
+          <li>No characters available</li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="character-details" *ngIf="selectedCharacter">
+    <img [src]="selectedCharacter.classDTO.classFullArt" alt="{{ selectedCharacter.classDTO.className }} Art" class="character-full-art" />
+    <div class="character-name-level">
+      {{ selectedCharacter.characterName }} Niv.{{ selectedCharacter.characterLvl }}
+    </div>
+    <form (ngSubmit)="updateCharacterLevel()" class="level-update-form">
+      <label for="newLevel">Level:</label>
+      <input type="number" id="newLevel" name="newLevel" [(ngModel)]="newLevel" min="1" max="200">
+      <button type="submit">Update Level</button>
+    </form>
+  </div>
+</div>

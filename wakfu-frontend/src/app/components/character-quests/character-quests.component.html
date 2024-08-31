@@ -1,0 +1,33 @@
+<h1>Character Quest Status</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Quest</th>
+    @for (character of (characters$ | async); track character.characterId) {
+      <th>{{ character.characterName }}</th>
+    } @empty {
+      <th>No characters available</th>
+    }
+  </tr>
+  </thead>
+  <tbody>
+    @for (quest of (combinedData$ | async); track quest.questId) {
+      <tr>
+        <td>{{ quest.questName }}</td>
+        @for (character of quest.characters; track character.uniqueKey) {
+          <td>
+            <input
+              type="checkbox"
+              [ngModel]="character.completionStatus"
+              (ngModelChange)="updateStatus(character.characterId, quest.questId, $event)"
+            />
+          </td>
+        }
+      </tr>
+    } @empty {
+      <tr>
+        <td colspan="2">No quests available</td>
+      </tr>
+    }
+  </tbody>
+</table>

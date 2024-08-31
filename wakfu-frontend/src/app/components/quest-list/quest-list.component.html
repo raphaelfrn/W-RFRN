@@ -1,0 +1,14 @@
+<h1>Quest List</h1>
+<ul>
+  @for (quest of (quests$ | async); track quest.questId) {
+    <li>
+      <div>
+        <strong>{{ quest.questName }}</strong>
+        <p>Description: {{ quest.questDescription }}</p>
+        <p>Type: {{ quest.questType }}</p>
+      </div>
+    </li>
+  } @empty {
+    <li>No quests available</li>
+  }
+</ul>
