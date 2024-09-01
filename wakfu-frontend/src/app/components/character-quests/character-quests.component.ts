@@ -36,9 +36,11 @@ export class CharacterQuestsComponent implements OnInit {
         return quests.map(quest => ({
           questId: quest.questId,
           questName: quest.questName,
+          questType: quest.questType,
+          questDescription: quest.questDescription,
           characters: characters.map(character => ({
             characterId: character.characterId,
-            characterName: character.characterName,
+            classIcon: character.classDTO.classIcon, // Utilisation de classIcon au lieu de characterName
             completionStatus: characterQuests.find(cq => cq.characterId === character.characterId && cq.questId === quest.questId)?.completionStatus || false,
             uniqueKey: `${quest.questId}-${character.characterId}` // Clé unique pour chaque combinaison de quête et personnage
           }))
@@ -54,4 +56,3 @@ export class CharacterQuestsComponent implements OnInit {
     });
   }
 }
-

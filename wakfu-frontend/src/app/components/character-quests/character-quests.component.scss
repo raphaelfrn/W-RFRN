@@ -1,13 +1,66 @@
+.quest-list-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  padding: 20px;
+  color: #FDFAD6;
+  font-family: Arial, sans-serif;
+}
+
+.quest-table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
+  background-color: rgba(30, 41, 61, 0.9);
+  color: #FDFAD6;
 }
 
 th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px 15px;
+  border-bottom: 1px solid rgba(253, 250, 214, 0.2);
+  text-align: center; /* Centrage du texte */
+}
+td{
+  min-height: 40px;
 }
 
 th {
-  background-color: #f4f4f4;
+  background-color: rgba(44, 62, 80, 0.8);
+  color: #FDFAD6;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.quest-name, .quest-type {
+  padding-left: 10px; /* Ajoute un espacement à gauche pour l'alignement */
+}
+
+.quest-name {
+  width: 150px; /* Réduit la largeur de la colonne des noms des quêtes */
+}
+
+.quest-type {
+  width: 100px; /* Réduit la largeur de la colonne du type de quête */
+}
+
+.quest-description {
+  width: 50px;
+}
+
+tbody tr:nth-of-type(odd) {
+  background-color: rgba(44, 62, 80, 0.7);
+}
+
+tbody tr:hover {
+  background-color: rgba(44, 62, 80, 0.6);
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
 }
