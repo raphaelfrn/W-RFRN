@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { CharacterService } from '../../services/character.service';
 import {catchError, Observable, of, tap} from 'rxjs';
-import { CommonModule } from '@angular/common';
+import {CommonModule, KeyValue} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CharacterDTO } from "../../dto/CharacterDTO";
 
@@ -38,6 +38,7 @@ export class CharacterListComponent implements OnInit {
           }
           console.log(`Updated ${this.selectedCharacter?.characterName}'s level to ${this.newLevel}`);
         }),
+
         catchError(error => {
           // Gérez les erreurs
           console.error('Error updating character level:', error);
@@ -46,5 +47,6 @@ export class CharacterListComponent implements OnInit {
       ).subscribe();
     }
   }
+
 
 }

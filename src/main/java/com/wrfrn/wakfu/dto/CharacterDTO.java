@@ -7,6 +7,7 @@ public class CharacterDTO {
     private Integer characterId;
     private String characterName;
     private Integer characterLvl;
+    private Integer chests;
     private ClassDTO classDTO;
     private UserDTO userDTO;
 

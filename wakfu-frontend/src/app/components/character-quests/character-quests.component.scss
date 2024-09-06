@@ -1,7 +1,7 @@
 .quest-list-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 98vh;
   width: 100vw;
   padding: 20px;
   color: #FDFAD6;
@@ -24,9 +24,11 @@ table {
 th, td {
   padding: 12px 15px;
   border-bottom: 1px solid rgba(253, 250, 214, 0.2);
-  text-align: center; /* Centrage du texte */
+  text-align: center;
+  height:50px;
 }
-td{
+
+td {
   min-height: 40px;
 }
 
@@ -38,15 +40,15 @@ th {
 }
 
 .quest-name, .quest-type {
-  padding-left: 10px; /* Ajoute un espacement à gauche pour l'alignement */
+  padding-left: 10px;
 }
 
 .quest-name {
-  width: 150px; /* Réduit la largeur de la colonne des noms des quêtes */
+  width: 150px;
 }
 
 .quest-type {
-  width: 100px; /* Réduit la largeur de la colonne du type de quête */
+  width: 100px;
 }
 
 .quest-description {
@@ -61,6 +63,85 @@ tbody tr:hover {
   background-color: rgba(44, 62, 80, 0.6);
 }
 
-input[type="checkbox"] {
+.status-cell {
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.status-cell:hover {
+  opacity: 0.8;
+}
+
+.status-cell.completed {
+  background-color: rgba(0, 255, 0, 0.3); /* Green for completed */
+}
+
+.status-cell:not(.completed) {
+  background-color: rgba(255, 0, 0, 0.3); /* Red for not completed */
+}
+
+.class-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.quest-type {
+  padding-left: 10px;
+  text-transform: capitalize; /* Pour rendre la première lettre majuscule */
+}
+
+/* Couleur pour chaque type de quête */
+.quest-type.principale {
+  color: #FDFAD6; /* Priorité 1 : Couleur actuelle */
+}
+
+.quest-type.otomai {
+  color: #f1b18e; /* Priorité 2 : Pastel orangé, doux et lisible */
+}
+
+.quest-type.mercenaires {
+  color: #C1E1FF; /* Priorité 3 : Pastel bleu, calme et lisible */
+}
+
+.quest-type.annexe {
+  color: #8f949a; /* Priorité 4 : Gris pastel, lisible */
+}
+
+
+.filter-modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #2C3E50;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 300px;
+  color: #FDFAD6;
+}
+
+.modal-content h3 {
+  text-align: center;
+}
+
+button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: #3b5577;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #4A5568;
 }

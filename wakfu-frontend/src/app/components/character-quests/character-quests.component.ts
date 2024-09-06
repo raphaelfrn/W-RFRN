@@ -5,7 +5,7 @@ import { QuestDTO } from '../../dto/QuestDTO';
 import { CharacterQuestDTO } from '../../dto/CharacterQuestDTO';
 import { CharacterQuestService } from '../../services/character-quest.service';
 import {FormsModule} from "@angular/forms";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, CommonModule, LowerCasePipe} from "@angular/common";
 
 @Component({
   selector: 'app-character-quests',
@@ -13,7 +13,9 @@ import {AsyncPipe} from "@angular/common";
   templateUrl: './character-quests.component.html',
   imports: [
     FormsModule,
-    AsyncPipe
+    AsyncPipe,
+    LowerCasePipe,
+    CommonModule
   ],
   styleUrls: ['./character-quests.component.scss']
 })
@@ -21,6 +23,13 @@ export class CharacterQuestsComponent implements OnInit {
   characters$!: Observable<CharacterDTO[]>;
   quests$!: Observable<QuestDTO[]>;
   characterQuests$!: Observable<CharacterQuestDTO[]>;
+  isFilterModalOpen = false;
+  selectedQuestTypes = {
+    principale: true,
+    otomai: true,
+    mercenaires: true,
+    annexe: true
+  };
 
   combinedData$!: Observable<any[]>;
 
@@ -33,18 +42,26 @@ export class CharacterQuestsComponent implements OnInit {
 
     this.combinedData$ = forkJoin([this.quests$, this.characters$, this.characterQuests$]).pipe(
       map(([quests, characters, characterQuests]) => {
-        return quests.map(quest => ({
-          questId: quest.questId,
-          questName: quest.questName,
-          questType: quest.questType,
-          questDescription: quest.questDescription,
-          characters: characters.map(character => ({
-            characterId: character.characterId,
-            classIcon: character.classDTO.classIcon, // Utilisation de classIcon au lieu de characterName
-            completionStatus: characterQuests.find(cq => cq.characterId === character.characterId && cq.questId === quest.questId)?.completionStatus || false,
-            uniqueKey: `${quest.questId}-${character.characterId}` // Clé unique pour chaque combinaison de quête et personnage
-          }))
-        }));
+        return quests
+          .filter(quest => {
+            if (quest.questType.toLowerCase() === 'principale' && this.selectedQuestTypes.principale) return true;
+            if (quest.questType.toLowerCase() === 'otomai' && this.selectedQuestTypes.otomai) return true;
+            if (quest.questType.toLowerCase() === 'mercenaires' && this.selectedQuestTypes.mercenaires) return true;
+            if (quest.questType.toLowerCase() === 'annexe' && this.selectedQuestTypes.annexe) return true;
+            return false;
+          })
+          .map(quest => ({
+            questId: quest.questId,
+            questName: quest.questName,
+            questType: quest.questType,
+            questDescription: quest.questDescription,
+            characters: characters.map(character => ({
+              characterId: character.characterId,
+              classIcon: character.classDTO.classIcon,
+              completionStatus: characterQuests.find(cq => cq.characterId === character.characterId && cq.questId === quest.questId)?.completionStatus || false,
+              uniqueKey: `${quest.questId}-${character.characterId}`
+            }))
+          }));
       })
     );
   }
@@ -54,5 +71,21 @@ export class CharacterQuestsComponent implements OnInit {
       // Refresh the data after the update
       this.ngOnInit();
     });
+  }
+
+  openFilterModal() {
+    this.isFilterModalOpen = true;
+  }
+
+  closeFilterModal() {
+    this.isFilterModalOpen = false;
+  }
+
+  applyFilter() {
+    // Ferme la modal après avoir appliqué le filtre
+    this.isFilterModalOpen = false;
+
+    // Recharge la liste des quêtes en fonction des filtres sélectionnés
+    this.ngOnInit();
   }
 }

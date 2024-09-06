@@ -1,6 +1,6 @@
 .character-selection-container {
   display: flex;
-  height: 100vh;
+  height: 98vh;
   width: 100vw;
   color: #FDFAD6;
   font-family: Arial, sans-serif;
@@ -116,7 +116,7 @@ h1 {
 
 .level-update-form button {
   padding: 8px 16px;
-  background-color: #4CAF50;
+  background-color: #3b5577;
   color: white;
   border: none;
   border-radius: 3px;
@@ -125,7 +125,17 @@ h1 {
 }
 
 .level-update-form button:hover {
-  background-color: #45a049;
+  background-color: #4A5568;
+}
+
+.character-coffres {
+  margin-top:20px;
+  font-size:20px ;
+}
+
+.character-coffres img{
+  width: 16px;
+  padding-right: 3px;
 }
 
 

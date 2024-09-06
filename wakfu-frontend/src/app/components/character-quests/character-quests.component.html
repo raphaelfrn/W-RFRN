@@ -4,11 +4,15 @@
       <thead>
       <tr>
         <th>Quêtes</th>
-        <th>Type</th>
+        <th>
+          Type
+          <i class="filter-icon" (click)="openFilterModal()">🔍</i>
+        </th>
+
         <th>Level</th>
         @for (character of (characters$ | async); track character.characterId) {
           <th>
-            <img [src]="character.classDTO.classIcon" alt="Class Icon" width="24" height="24"/> <!-- Icône de la classe -->
+            <img [src]="character.classDTO.classIcon" [alt]="character.classDTO.className" class="class-icon">
           </th>
         } @empty {
           <th>No characters available</th>
@@ -19,24 +23,46 @@
         @for (quest of (combinedData$ | async); track quest.questId) {
           <tr>
             <td class="quest-name">{{ quest.questName }}</td>
-            <td class="quest-type">{{ quest.questType }}</td>
+            <td class="quest-type {{ quest.questType | lowercase }}">{{ quest.questType }}</td>
             <td class="quest-description">{{ quest.questDescription }}</td>
             @for (character of quest.characters; track character.uniqueKey) {
-              <td>
-                <input
-                  type="checkbox"
-                  [ngModel]="character.completionStatus"
-                  (ngModelChange)="updateStatus(character.characterId, quest.questId, $event)"
-                />
-              </td>
+              <td
+                class="status-cell"
+                [class.completed]="character.completionStatus"
+                (click)="updateStatus(character.characterId, quest.questId, !character.completionStatus)"
+              ></td>
             }
           </tr>
         } @empty {
           <tr>
-            <td colspan="3">No quests available</td> <!-- Mise à jour de colspan pour inclure la nouvelle colonne -->
+            <td colspan="4">No quests available</td>
           </tr>
         }
       </tbody>
     </table>
   </div>
+  <!-- Modal Filter -->
+  <div id="filterModal" class="filter-modal" *ngIf="isFilterModalOpen">
+    <div class="modal-content">
+      <h3>Filtrer par type de quête</h3>
+      <form>
+        <label>
+          <input type="checkbox" name="principale" [(ngModel)]="selectedQuestTypes.principale"> Principale
+        </label><br>
+        <label>
+          <input type="checkbox" name="otomai" [(ngModel)]="selectedQuestTypes.otomai"> Otomaï
+        </label><br>
+        <label>
+          <input type="checkbox" name="mercenaires" [(ngModel)]="selectedQuestTypes.mercenaires"> Mercenaires
+        </label><br>
+        <label>
+          <input type="checkbox" name="annexe" [(ngModel)]="selectedQuestTypes.annexe"> Annexe
+        </label><br><br>
+        <button (click)="applyFilter()">Appliquer</button>
+        <button (click)="closeFilterModal()">Annuler</button>
+      </form>
+    </div>
+  </div>
+
+
 </div>

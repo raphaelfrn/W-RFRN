@@ -25,6 +25,9 @@ public class Character {
     @Column(name = "character_lvl", nullable = false)
     private Integer characterLvl;
 
+    @Column(name= "coffres")
+    private Integer chests;
+
     @ManyToOne
     @JoinColumn(name = "class_id", nullable = false)
     private Class classe;
