@@ -17,6 +17,7 @@ export class CharacterListComponent implements OnInit {
   characters$!: Observable<CharacterDTO[]>;
   selectedCharacter!: CharacterDTO | null;
   newLevel: number = 1;
+  newChests : number = 1;
 
   constructor(private characterService: CharacterService) {}
 
@@ -27,7 +28,9 @@ export class CharacterListComponent implements OnInit {
   selectCharacter(character: CharacterDTO): void {
     this.selectedCharacter = character;
     this.newLevel = character.characterLvl;
+    this.newChests = character.chests;
   }
+
   updateCharacterLevel(): void {
     if (this.selectedCharacter && this.newLevel !== this.selectedCharacter.characterLvl) {
       this.characterService.updateCharacterLevel(this.selectedCharacter.characterId, this.newLevel).pipe(
@@ -42,6 +45,25 @@ export class CharacterListComponent implements OnInit {
         catchError(error => {
           // Gérez les erreurs
           console.error('Error updating character level:', error);
+          return of(null);
+        })
+      ).subscribe();
+    }
+  }
+
+  updateCharacterChests(): void {
+    if (this.selectedCharacter && this.newChests !== this.selectedCharacter.chests) {
+      this.characterService.updateCharacterChests(this.selectedCharacter.characterId, this.newChests).pipe(
+        tap(() => {
+          if (this.selectedCharacter) {
+            this.selectedCharacter.chests = this.newChests;
+          }
+          console.log(`Updated ${this.selectedCharacter?.characterName}'s chests to ${this.newChests}`);
+        }),
+
+        catchError(error => {
+          // Gérez les erreurs
+          console.error('Error updating character chests:', error);
           return of(null);
         })
       ).subscribe();

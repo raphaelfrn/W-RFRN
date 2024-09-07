@@ -31,6 +31,10 @@ export class CharacterService {
     return this.http.patch(`${this.baseUrl}/${characterId}`, { characterLvl: newLevel });
   }
 
+  updateCharacterChests(characterId: number, newChests: number): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/${characterId}/chests`, { chests: newChests });
+  }
+
   deleteCharacter(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }

@@ -68,6 +68,19 @@ public class CharacterController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PatchMapping("/{id}/chests")
+    public ResponseEntity<CharacterDTO> updateCharacterChests(@PathVariable Integer id, @RequestBody CharacterDTO characterDTO) {
+        return characterService.findById(id)
+                .map(existingCharacter -> {
+                    existingCharacter.setChests(characterDTO.getChests()); // Met à jour le nombre de coffres
+                    Character updatedCharacter = characterService.save(existingCharacter);
+                    CharacterDTO updatedDTO = GenericConverter.map(updatedCharacter, CharacterDTO.class);
+                    return ResponseEntity.ok(updatedDTO);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCharacter(@PathVariable Integer id) {
         if (characterService.findById(id).isEmpty()) {
